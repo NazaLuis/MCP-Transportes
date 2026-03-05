@@ -43,8 +43,8 @@ async function runDemo() {
         fFin: fFin,
         // Añadimos destino opcional para que aparezca en la consulta
         provFinINE: '28',
-        muniFinINE: '079',
-        direccionFin: 'Aeropuerto Barajas T4, Madrid',
+        muniFinINE: '009',
+        direccionFin: 'Camino ancho, 2',
         // Si origen y destino son iguales (mismo municipio), el punto lejano es obligatorio
         provLejanoINE: '28',
         muniLejanoINE: '006', // Alcala de Henares (como punto lejano)
