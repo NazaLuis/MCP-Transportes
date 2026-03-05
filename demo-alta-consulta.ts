@@ -41,6 +41,10 @@ async function runDemo() {
         direccionInicio: 'Calle de Prueba 123, Madrid',
         fPrevistaInicio: fPrevistaInicio,
         fFin: fFin,
+        // Añadimos destino opcional para que aparezca en la consulta
+        provFinINE: '28',
+        muniFinINE: '079',
+        direccionFin: 'Aeropuerto Barajas T4, Madrid',
         veraz: 'S' as const
     };
 
