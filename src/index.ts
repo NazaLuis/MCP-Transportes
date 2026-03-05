@@ -6,9 +6,13 @@
  * integration with MITMA via SOAP 1.1 + WS-Security X.509.
  */
 
+import { config as dotenvConfig } from 'dotenv';
 import { loadConfig } from './config.js';
 import { createMcpServer } from './mcp/server.js';
 import { logger } from './logger.js';
+
+// Load environment variables from .env if present
+dotenvConfig();
 
 async function main() {
     try {
