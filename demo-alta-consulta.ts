@@ -23,9 +23,12 @@ async function runDemo() {
     });
 
     // 3. Datos de prueba para el Alta
-    const fContrato = new Date().toISOString();
-    const fPrevistaInicio = new Date(Date.now() + 3600000).toISOString();
-    const fFin = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+    const formatDate = (date: Date) => date.toISOString().replace(/\.\d{3}Z$/, '');
+    const formatDay = (date: Date) => date.toISOString().slice(0, 10);
+
+    const fContrato = formatDate(new Date());
+    const fPrevistaInicio = formatDate(new Date(Date.now() + 3600000));
+    const fFin = formatDay(new Date(Date.now() + 86400000));
 
     const altaData = {
         matricula: '1234-DEM',
