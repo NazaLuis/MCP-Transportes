@@ -1,7 +1,10 @@
 /** Certificate loading: P12 and PEM support */
 
 import * as fs from 'node:fs';
-import * as forge from 'node-forge';
+import pkgForge from 'node-forge';
+
+// Handle ESM/CJS interop for node-forge
+const forge = (pkgForge as any).default || pkgForge;
 
 export interface CertificateData {
     /** PEM-encoded certificate (public) */
