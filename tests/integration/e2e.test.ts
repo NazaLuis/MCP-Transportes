@@ -75,7 +75,8 @@ describe.skipIf(SKIP)('RVTC E2E Integration', () => {
         // 2. CONSULTA ANTES DE INICIO
         const consultaResult = await handleGetService({ idServicio }, client);
         expect(consultaResult.ok).toBe(true);
-        expect(consultaResult.idServicio).toBe(idServicio);
+        // Nota: La respuesta de Consulta (EVTCSERVICIOEMPRE) no devuelve el idservicio según el WSDL,
+        // por lo que no lo verificamos.
 
         // 3. INICIO
         const startResult = await handleStartService({ idServicio }, client);
