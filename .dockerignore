@@ -1,0 +1,13 @@
+node_modules
+dist
+npm-debug.log
+.env
+*.p12
+*.pem
+tests
+.git
+.vscode
+*.pdf
+test-demo.ts
+demo-alta-consulta.ts
+wsdl_test.js

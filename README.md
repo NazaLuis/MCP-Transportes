@@ -121,9 +121,47 @@ Añade este bloque al archivo `claude_desktop_config.json`:
       "env": {
         "RVTC_ENV": "integration",
         "RVTC_P12_PATH": "/Users/lunavarr/MCP-Transportes/Luis.p12",
-        "RVTC_P12_PASSWORD": "Nazario1$",
+        "RVTC_P12_PASSWORD": "Nazario1.",
         "RVTC_INTERMEDIARIO_NIF": "XXXXXXXX"
       }
+    }
+  }
+}
+```
+
+## Ejecución con Docker
+
+Si prefieres ejecutar el servidor MCP dentro de un contenedor, hemos incluido un `Dockerfile` multi-etapa optimizado.
+
+### 1. Construir la imagen
+```bash
+docker build -t mcp-rvtc .
+```
+
+### 2. Ejecutar el contenedor
+Para que el contenedor tenga acceso a tu configuración y certificado, debes montarlos como volúmenes:
+
+```bash
+docker run -i --rm \
+  -v $(pwd)/.env:/app/.env \
+  -v $(pwd)/Luis.p12:/app/Luis.p12 \
+  mcp-rvtc
+```
+
+### 3. Integración en Claude Desktop (Docker)
+Añade este bloque al archivo `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "rvtc-docker": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-v", "/ruta/absoluta/.env:/app/.env",
+        "-v", "/ruta/absoluta/Luis.p12:/app/Luis.p12",
+        "mcp-rvtc"
+      ]
     }
   }
 }
