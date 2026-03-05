@@ -126,9 +126,7 @@ describe('XML Builders', () => {
 
             expect(xml).toContain('soapenv:Envelope');
             expect(xml).toContain('<vtc:qiniciovtc>');
-            expect(xml).toContain('<vtcservicio>');
-            expect(xml).toContain('<idservicio>12345</idservicio>');
-            expect(xml).toContain('</vtcservicio>');
+            expect(xml).toContain('<vtcservicio idservicio="12345"/>');
             expect(xml).toContain('wsu:Id="id-body-1"');
         });
     });
@@ -138,8 +136,7 @@ describe('XML Builders', () => {
             const xml = buildAnulacionXml(67890, FROZEN_OPTS);
 
             expect(xml).toContain('<vtc:qanulacionvtc>');
-            expect(xml).toContain('<vtcservicio>');
-            expect(xml).toContain('<idservicio>67890</idservicio>');
+            expect(xml).toContain('<vtcservicio idservicio="67890"/>');
         });
     });
 
@@ -148,9 +145,7 @@ describe('XML Builders', () => {
             const xml = buildConsultaXml(11111, FROZEN_OPTS);
 
             expect(xml).toContain('<vtc:qconsultavtc>');
-            expect(xml).toContain('<vtcconsulta>');
-            expect(xml).toContain('<idservicio>11111</idservicio>');
-            expect(xml).toContain('</vtcconsulta>');
+            expect(xml).toContain('<vtcconsulta idservicio="11111"/>');
         });
     });
 
@@ -165,10 +160,10 @@ describe('XML Builders', () => {
             const xml = buildModificacionXml(input, FROZEN_OPTS);
 
             expect(xml).toContain('<vtc:qmodificacionvtc>');
-            expect(xml).toContain('<idservicio>99999</idservicio>');
-            expect(xml).toContain('<cgprovfin>28</cgprovfin>');
-            expect(xml).toContain('<cgmunifin>079</cgmunifin>');
-            expect(xml).toContain('<direccionfin>Nuevo Destino</direccionfin>');
+            expect(xml).toContain('idservicio="99999"');
+            expect(xml).toContain('cgprovfin="28"');
+            expect(xml).toContain('cgmunifin="079"');
+            expect(xml).toContain('direccionfin="Nuevo Destino"');
             // Not provided
             expect(xml).not.toContain('cgprovlejano');
             expect(xml).not.toContain('matricula');
@@ -180,7 +175,7 @@ describe('XML Builders', () => {
                 matricula: '5678-CCC',
             };
             const xml = buildModificacionXml(input, FROZEN_OPTS);
-            expect(xml).toContain('<matricula>5678-CCC</matricula>');
+            expect(xml).toContain('matricula="5678-CCC"');
         });
 
         it('should include punto lejano fields when provided', () => {
@@ -191,9 +186,9 @@ describe('XML Builders', () => {
                 direccionLejano: 'Lejano Mod',
             };
             const xml = buildModificacionXml(input, FROZEN_OPTS);
-            expect(xml).toContain('<cgprovlejano>46</cgprovlejano>');
-            expect(xml).toContain('<cgmunilejano>250</cgmunilejano>');
-            expect(xml).toContain('<direccionlejano>Lejano Mod</direccionlejano>');
+            expect(xml).toContain('cgprovlejano="46"');
+            expect(xml).toContain('cgmunilejano="250"');
+            expect(xml).toContain('direccionlejano="Lejano Mod"');
         });
     });
 });

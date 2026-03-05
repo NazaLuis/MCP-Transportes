@@ -6,38 +6,36 @@ import { buildHeader, buildSoapEnvelope, escapeXml, type XmlBuilderOptions } fro
 export function buildModificacionXml(input: ModificacionInput, opts?: XmlBuilderOptions): string {
     const header = buildHeader(opts);
 
-    const children: string[] = [
-        `          <idservicio>${input.idServicio}</idservicio>`,
+    const attrs: string[] = [
+        `idservicio="${input.idServicio}"`
     ];
 
     if (input.provFinINE) {
-        children.push(`          <cgprovfin>${escapeXml(input.provFinINE)}</cgprovfin>`);
+        attrs.push(`cgprovfin="${escapeXml(input.provFinINE)}"`);
     }
     if (input.muniFinINE) {
-        children.push(`          <cgmunifin>${escapeXml(input.muniFinINE)}</cgmunifin>`);
+        attrs.push(`cgmunifin="${escapeXml(input.muniFinINE)}"`);
     }
     if (input.direccionFin) {
-        children.push(`          <direccionfin>${escapeXml(input.direccionFin)}</direccionfin>`);
+        attrs.push(`direccionfin="${escapeXml(input.direccionFin)}"`);
     }
     if (input.provLejanoINE) {
-        children.push(`          <cgprovlejano>${escapeXml(input.provLejanoINE)}</cgprovlejano>`);
+        attrs.push(`cgprovlejano="${escapeXml(input.provLejanoINE)}"`);
     }
     if (input.muniLejanoINE) {
-        children.push(`          <cgmunilejano>${escapeXml(input.muniLejanoINE)}</cgmunilejano>`);
+        attrs.push(`cgmunilejano="${escapeXml(input.muniLejanoINE)}"`);
     }
     if (input.direccionLejano) {
-        children.push(`          <direccionlejano>${escapeXml(input.direccionLejano)}</direccionlejano>`);
+        attrs.push(`direccionlejano="${escapeXml(input.direccionLejano)}"`);
     }
     if (input.matricula) {
-        children.push(`          <matricula>${escapeXml(input.matricula)}</matricula>`);
+        attrs.push(`matricula="${escapeXml(input.matricula)}"`);
     }
 
     const bodyContent = [
         `      ${header}`,
         `      <body>`,
-        `        <vtcservicio>`,
-        ...children,
-        `        </vtcservicio>`,
+        `        <vtcservicio ${attrs.join(' ')}/>`,
         `      </body>`,
     ].join('\n');
 

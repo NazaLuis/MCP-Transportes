@@ -8,9 +8,7 @@ export function buildAnulacionXml(idServicio: number, opts?: XmlBuilderOptions):
     const bodyContent = [
         `      ${header}`,
         `      <body>`,
-        `        <vtcservicio>`,
-        `          <idservicio>${idServicio}</idservicio>`,
-        `        </vtcservicio>`,
+        `        <vtcservicio idservicio="${idServicio}"/>`,
         `      </body>`,
     ].join('\n');
 

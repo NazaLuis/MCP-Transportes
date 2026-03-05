@@ -8,9 +8,7 @@ export function buildConsultaXml(idServicio: number, opts?: XmlBuilderOptions): 
     const bodyContent = [
         `      ${header}`,
         `      <body>`,
-        `        <vtcconsulta>`,
-        `          <idservicio>${idServicio}</idservicio>`,
-        `        </vtcconsulta>`,
+        `        <vtcconsulta idservicio="${idServicio}"/>`,
         `      </body>`,
     ].join('\n');
 

@@ -8,9 +8,7 @@ export function buildInicioXml(idServicio: number, opts?: XmlBuilderOptions): st
     const bodyContent = [
         `      ${header}`,
         `      <body>`,
-        `        <vtcservicio>`,
-        `          <idservicio>${idServicio}</idservicio>`,
-        `        </vtcservicio>`,
+        `        <vtcservicio idservicio="${idServicio}"/>`,
         `      </body>`,
     ].join('\n');
 
