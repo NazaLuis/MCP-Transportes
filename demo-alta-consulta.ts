@@ -29,7 +29,7 @@ async function runDemo() {
 
     const altaData = {
         matricula: '1234-DEM',
-        nifTitular: 'B12345678',
+        nifTitular: '99999999R',
         provContratoINE: '28',
         muniContratoINE: '079',
         fContrato: fContrato,
