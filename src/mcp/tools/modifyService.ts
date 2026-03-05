@@ -23,7 +23,19 @@ export async function handleModifyService(
     input: ModifyServiceInput,
     client: SoapClient,
 ): Promise<RvtcResponse> {
-    const validated = validateModificacionInput(input as ModificacionInput);
-    const xml = buildModificacionXml(validated);
-    return client.send('ModificacionDeServicio', xml);
+    try {
+        const validated = validateModificacionInput(input as ModificacionInput);
+        const xml = buildModificacionXml(validated);
+        return await client.send('ModificacionDeServicio', xml);
+    } catch (err) {
+        return {
+            ok: false,
+            resultado: 'VAL-ERR',
+            idServicio: input.idServicio,
+            idComunica: null,
+            idError: null,
+            message: (err as Error).message,
+            raw: { soap: '', parsed: {} },
+        };
+    }
 }

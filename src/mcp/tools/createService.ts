@@ -40,7 +40,19 @@ export async function handleCreateService(
         intermediarioNif: config.intermediarioNif,
     };
 
-    const validated = validateAltaInput(input as AltaInput, ctx);
-    const xml = buildAltaXml(validated, config.intermediarioNif);
-    return client.send('AltaDeServicio', xml);
+    try {
+        const validated = validateAltaInput(input as AltaInput, ctx);
+        const xml = buildAltaXml(validated, config.intermediarioNif);
+        return await client.send('AltaDeServicio', xml);
+    } catch (err) {
+        return {
+            ok: false,
+            resultado: 'VAL-ERR',
+            idServicio: null,
+            idComunica: null,
+            idError: null,
+            message: (err as Error).message,
+            raw: { soap: '', parsed: {} },
+        };
+    }
 }

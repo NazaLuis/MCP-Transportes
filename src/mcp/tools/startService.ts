@@ -16,7 +16,19 @@ export async function handleStartService(
     input: StartServiceInput,
     client: SoapClient,
 ): Promise<RvtcResponse> {
-    const id = validateIdServicio(input.idServicio);
-    const xml = buildInicioXml(id);
-    return client.send('InicioDeServicio', xml);
+    try {
+        const id = validateIdServicio(input.idServicio);
+        const xml = buildInicioXml(id);
+        return await client.send('InicioDeServicio', xml);
+    } catch (err) {
+        return {
+            ok: false,
+            resultado: 'VAL-ERR',
+            idServicio: input.idServicio,
+            idComunica: null,
+            idError: null,
+            message: (err as Error).message,
+            raw: { soap: '', parsed: {} },
+        };
+    }
 }

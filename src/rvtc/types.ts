@@ -57,9 +57,9 @@ export type SoapOperation =
     | 'ConsultaDeServicio';
 
 export const SOAP_ACTIONS: Record<SoapOperation, string> = {
-    AltaDeServicio: 'http://mfom.com/vtc/AltaDeServicio',
-    InicioDeServicio: 'http://mfom.com/vtc/InicioDeServicio',
-    AnulacionDeServicio: 'http://mfom.com/vtc/AnulacionDeServicio',
-    ModificacionDeServicio: 'http://mfom.com/vtc/ModificacionDeServicio',
-    ConsultaDeServicio: 'http://mfom.com/vtc/ConsultaDeServicio',
+    AltaDeServicio: 'http://www.fomento.org/VTCService/AltaDeServicio',
+    InicioDeServicio: 'http://www.fomento.org/VTCService/Inicio',
+    AnulacionDeServicio: 'http://www.fomento.org/VTCService/Anulacion',
+    ModificacionDeServicio: 'http://www.fomento.org/VTCService/Modificacion',
+    ConsultaDeServicio: 'http://www.fomento.org/VTCService/Consulta',
 };

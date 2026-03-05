@@ -16,7 +16,19 @@ export async function handleCancelService(
     input: CancelServiceInput,
     client: SoapClient,
 ): Promise<RvtcResponse> {
-    const id = validateIdServicio(input.idServicio);
-    const xml = buildAnulacionXml(id);
-    return client.send('AnulacionDeServicio', xml);
+    try {
+        const id = validateIdServicio(input.idServicio);
+        const xml = buildAnulacionXml(id);
+        return await client.send('AnulacionDeServicio', xml);
+    } catch (err) {
+        return {
+            ok: false,
+            resultado: 'VAL-ERR',
+            idServicio: input.idServicio,
+            idComunica: null,
+            idError: null,
+            message: (err as Error).message,
+            raw: { soap: '', parsed: {} },
+        };
+    }
 }
