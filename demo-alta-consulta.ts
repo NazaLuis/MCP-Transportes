@@ -1,17 +1,29 @@
-import { createSoapClient } from './src/rvtc/soapClient/client.js';
+import { loadConfig } from './src/config.js';
+import { SoapClient } from './src/rvtc/soapClient/client.js';
+import { loadCertificate } from './src/rvtc/wsse/certs.js';
+import { logger } from './src/logger.js';
 import { handleCreateService } from './src/mcp/tools/createService.js';
 import { handleGetService } from './src/mcp/tools/getService.js';
 
 async function runDemo() {
     console.log('🚀 Iniciando demostración RVTC...');
-    console.log('Entorno:', process.env.RVTC_ENV);
 
-    // 1. Inicializar cliente SOAP
-    const client = createSoapClient();
+    // 1. Cargar configuración y certificado (usa variables de entorno ya cargadas)
+    const rvtcConfig = loadConfig();
+    console.log('Entorno:', rvtcConfig.env);
+    console.log('Endpoint:', rvtcConfig.wsdlUrl);
 
-    // 2. Datos de prueba para el Alta
+    const certData = loadCertificate(rvtcConfig.cert);
+
+    // 2. Inicializar cliente SOAP directamente como hace el servidor MCP
+    const client = new SoapClient({
+        config: rvtcConfig,
+        certData,
+        logger
+    });
+
+    // 3. Datos de prueba para el Alta
     const fContrato = new Date().toISOString();
-    // Inicio: 1 hora a partir de ahora, Fin: Mañana
     const fPrevistaInicio = new Date(Date.now() + 3600000).toISOString();
     const fFin = new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
@@ -33,8 +45,8 @@ async function runDemo() {
     console.log('📝 ENVIANDO ALTA DE SERVICIO');
     console.log(JSON.stringify(altaData, null, 2));
 
-    // @ts-ignore
-    const altaResult = await handleCreateService(altaData, client);
+    // @ts-ignore - handleCreateService espera el tipo exacto de Zod
+    const altaResult = await handleCreateService(altaData, client, rvtcConfig);
 
     console.log('\n✅ RESULTADO ALTA:');
     console.log(`OK: ${altaResult.ok}`);
@@ -50,7 +62,7 @@ async function runDemo() {
     console.log('\n=========================================');
     console.log(`🔍 ENVIANDO CONSULTA PARA EL SERVICIO CON ID: ${altaResult.idServicio}`);
 
-    // 3. Consultar el servicio recién creado
+    // 4. Consultar el servicio recién creado
     const consultaResult = await handleGetService({ idServicio: altaResult.idServicio }, client);
 
     console.log('\n✅ RESULTADO CONSULTA:');
@@ -58,20 +70,17 @@ async function runDemo() {
     console.log(`Resultado Código: ${consultaResult.resultado}`);
     console.log(`Mensaje: ${consultaResult.message}`);
 
-    // 4. Mostrar los datos extraídos por el parser desde el RAW XML
+    // 5. Mostrar los datos extraídos por el parser
     if (consultaResult.raw && consultaResult.raw.parsed) {
         try {
-            const parsed = consultaResult.raw.parsed;
+            const parsed = consultaResult.raw.parsed as any;
 
-            // Navegar para extraer todos los atributos del servicio (Fast XML Parser mapea atributos con @_)
             const envelope = parsed.Envelope || parsed['soapenv:Envelope'] || parsed['soap:Envelope'];
             const body = envelope.Body || envelope['soapenv:Body'] || envelope['soap:Body'];
 
-            // El atributo de respuesta es rconsultavtc
             let serviceData = null;
-
             for (const key of Object.keys(body)) {
-                if (key.includes('rconsultavtc')) {
+                if (key.toLowerCase().includes('consultavtc')) {
                     const responseBody = body[key]?.body || body[key]?.['vtc:body'];
                     if (responseBody) {
                         serviceData = responseBody['vtcservicio'] || responseBody['vtc:vtcservicio'];
@@ -82,20 +91,14 @@ async function runDemo() {
 
             if (serviceData) {
                 console.log('\n📄 DATOS DEL SERVICIO OBTENIDOS DEL MITMA:');
-
-                // Formatear la salida para que sea legible sin los prefijos @_
                 const formattedData: Record<string, string> = {};
                 for (const [key, value] of Object.entries(serviceData)) {
-                    if (key.startsWith('@_')) {
-                        formattedData[key.substring(2)] = String(value);
-                    } else {
-                        formattedData[key] = String(value);
-                    }
+                    const cleanKey = key.startsWith('@_') ? key.substring(2) : key;
+                    formattedData[cleanKey] = String(value);
                 }
-
                 console.log(JSON.stringify(formattedData, null, 2));
             } else {
-                console.log('\n⚠️ No se encontraron atributos de servicio en la respuesta XML.');
+                console.log('\n⚠️ No se encontraron detalles adicionales del servicio en la respuesta.');
             }
         } catch (err) {
             console.log('No se pudieron extraer los atributos debido a un error de parseo.', err);
