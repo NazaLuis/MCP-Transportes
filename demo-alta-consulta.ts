@@ -48,7 +48,7 @@ async function runDemo() {
         // Si origen y destino son iguales (mismo municipio), el punto lejano es obligatorio
         provLejanoINE: '28',
         muniLejanoINE: '079', // Alcala de Henares (como punto lejano)
-        //direccionLejano: 'Plaza de Cervantes, Alcala de Henares',
+        direccionLejano: '',
         veraz: 'S' as const
     };
 
