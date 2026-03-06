@@ -46,9 +46,9 @@ async function runDemo() {
         muniFinINE: '079',
         direccionFin: 'Calle Jaime Hermida, 8, Madrid, España',
         // Si origen y destino son iguales (mismo municipio), el punto lejano es obligatorio
-        provLejanoINE: '28',
-        muniLejanoINE: '079', // Alcala de Henares (como punto lejano)
-        direccionLejano: '',
+        //provLejanoINE: '28',
+        //muniLejanoINE: '079', // Alcala de Henares (como punto lejano)
+        //direccionLejano: '',
         veraz: 'S' as const
     };
 
