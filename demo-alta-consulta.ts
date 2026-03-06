@@ -43,7 +43,7 @@ async function runDemo() {
         fFin: fFin,
         // Añadimos destino opcional para que aparezca en la consulta
         provFinINE: '28',
-        muniFinINE: '009',
+        muniFinINE: '079',
         direccionFin: 'Camino ancho, 2',
         // Si origen y destino son iguales (mismo municipio), el punto lejano es obligatorio
         //provLejanoINE: '28',
