@@ -27,7 +27,7 @@ async function runDemo() {
     const formatDay = (date: Date) => date.toISOString().slice(0, 10);
 
     const fContrato = formatDate(new Date());
-    const fPrevistaInicio = formatDate(new Date(Date.now() + 3600000));
+    const fPrevistaInicio = formatDate(new Date(Date.now() + 1800000));
     const fFin = formatDay(new Date(Date.now() + 86400000));
 
     const altaData = {
