@@ -26,9 +26,9 @@ async function runDemo() {
     const formatDate = (date: Date) => date.toISOString().replace(/\.\d{3}Z$/, '');
     const formatDay = (date: Date) => date.toISOString().slice(0, 10);
 
-    const fContrato = formatDate(new Date());
-    const fPrevistaInicio = formatDate(new Date(Date.now() + 1800000));
-    const fFin = formatDay(new Date(Date.now() + 86400000));
+    const fContrato = formatDate(new Date(Date.now() + 7200000)); // +2 horas
+    const fPrevistaInicio = formatDate(new Date(Date.now() + 86400000)); // +1 día
+    const fFin = formatDay(new Date(Date.now() + 172800000)); // +2 días (para que sea posterior al inicio)
 
     const altaData = {
         matricula: '9890-GCF',
