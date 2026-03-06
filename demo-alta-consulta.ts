@@ -38,17 +38,17 @@ async function runDemo() {
         fContrato: fContrato,
         provInicioINE: '28',
         muniInicioINE: '079',
-        direccionInicio: 'Calle de Prueba 123, Madrid',
+        direccionInicio: 'Calle de Hernán Cortés 9, Madrid 28004',
         fPrevistaInicio: fPrevistaInicio,
         fFin: fFin,
         // Añadimos destino opcional para que aparezca en la consulta
         provFinINE: '28',
         muniFinINE: '079',
-        direccionFin: 'Camino ancho, 2',
+        direccionFin: 'Calle Jaime Hermida, 8, Madrid, España',
         // Si origen y destino son iguales (mismo municipio), el punto lejano es obligatorio
         provLejanoINE: '28',
         muniLejanoINE: '079', // Alcala de Henares (como punto lejano)
-        direccionLejano: 'Plaza de Cervantes, Alcala de Henares',
+        //direccionLejano: 'Plaza de Cervantes, Alcala de Henares',
         veraz: 'S' as const
     };
 
